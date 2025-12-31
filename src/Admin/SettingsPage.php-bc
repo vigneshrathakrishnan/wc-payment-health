@@ -1,0 +1,66 @@
+<?php
+
+namespace WCPH\Admin;
+
+use WCPH\Infrastructure\OptionsRepository;
+
+final class SettingsPage
+{
+    public static function render(): void
+    {
+        $repo = new OptionsRepository();
+        $settings = $repo->get();
+
+        if ( isset($_POST['wcph_save']) && check_admin_referer('wcph_save_settings') ) {
+            $repo->update([
+                'enabled'       => isset($_POST['enabled']),
+                'track_offline' => isset($_POST['track_offline']),
+                'retain_events' => absint($_POST['retain_events']),
+                'default_range' => sanitize_text_field($_POST['default_range']),
+            ]);
+            echo '<div class="notice notice-success"><p>Settings saved.</p></div>';
+        }
+        ?>
+        <div class="wrap">
+            <h1>Payment Health Settings</h1>
+
+            <form method="post">
+                <?php wp_nonce_field('wcph_save_settings'); ?>
+
+                <table class="form-table">
+                    <tr>
+                        <th>Enable monitoring</th>
+                        <td><input type="checkbox" name="enabled" <?php checked($settings['enabled']); ?>></td>
+                    </tr>
+
+                    <tr>
+                        <th>Track offline payments</th>
+                        <td><input type="checkbox" name="track_offline" <?php checked($settings['track_offline']); ?>></td>
+                    </tr>
+
+                    <tr>
+                        <th>Event retention</th>
+                        <td>
+                            <input type="number" name="retain_events" value="<?php echo esc_attr($settings['retain_events']); ?>">
+                            <p class="description">Max stored events</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Default stats range</th>
+                        <td>
+                            <select name="default_range">
+                                <option value="24h" <?php selected($settings['default_range'], '24h'); ?>>24 Hours</option>
+                                <option value="7d" <?php selected($settings['default_range'], '7d'); ?>>7 Days</option>
+                                <option value="all" <?php selected($settings['default_range'], 'all'); ?>>All time</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <p><button class="button button-primary" name="wcph_save">Save</button></p>
+            </form>
+        </div>
+        <?php
+    }
+}

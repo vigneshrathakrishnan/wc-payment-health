@@ -1,0 +1,19 @@
+# OS / Editor
+.DS_Store
+.idea
+.vscode
+*.swp
+
+# Composer
+/vendor/
+composer.lock
+
+# PHPUnit
+.phpunit.result.cache
+
+# Node / build
+/node_modules/
+dist/
+
+# Logs
+*.log
