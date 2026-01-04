@@ -35,6 +35,11 @@ This plugin is designed as a lightweight MVP with a focus on clarity, correctnes
 
 ---
 
+## Screenshots
+
+![Piechart](assets/images/dashboard-stats-piechart-2026-01-04.png)
+![Table](assets/images/dashboard-stats-table-2026-01-04.png)
+
 ## Installation
 
 1. Clone or download the repository.
