@@ -1,4 +1,4 @@
-# WC Payment Health
+# Payment Gateways Health Monitor (For WooCommerce)
 
 Monitor WooCommerce payment success and failure rates across gateways with CSV import/export support.
 
